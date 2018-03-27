@@ -46,5 +46,50 @@ SASS:
 }
 ```
 
-这样嵌套着写看上去就会感觉很舒服又不累赘，用sass命令编译后就和上面的css代码一样的，但是呢，如果当sass文件很多，不可能都让自己手动去执行sass命令，于是乎自动化构建工具的作用就凸显出来了，通过javascript来配置
+这样嵌套着写看上去就会感觉很舒服又不累赘，用sass命令编译后就和上面的css代码一样的，但是呢，如果当sass文件很多，不可能都让自己手动去执行sass命令，于是乎自动化构建工具的作用就凸显出来了，比如grunt、gulp、webpack等等，通过这些工具来自动实现从sass变为css，并且还可以做到没修改一次sass文件都可以在浏览器里面看到新的效果，而不像以前那样修改一点css，然后F5刷新看效果。,下面是gulp的一个例子。
+
+gulp:
+
+```
+gulp.task( 'sass', function(){
+    //不能加入return,否则会导致 plumber无效
+    return gulp.src( host+'/scss/*.scss' )
+        //.pipe( plumber() )      //添加守护进程，让他不会因为错误而中断
+        .pipe( sass( sassOptions ).on('error', sass.logError) )
+        .pipe( csscomb() )      //属性优先级排序
+        //.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        //.pipe( plumber.stop() )
+        .pipe( gulp.dest( host+'/css' ) )
+        .pipe(reload({stream: true}));
+});
+
+/**
+ * [先编译sass，在将commom.css复制到公共文件夹]
+ * @param  {String} ){                 var _copyPath [description]
+ * @return {[type]}     [description]
+ */
+gulp.task('commonSass', ['sass'], function(){
+    var _copyPath = "common/assets/vendor/css";
+    deleteFile(_copyPath + '/common.css');
+    return gulp.src( host+'/css/common.css' )
+        .pipe( gulp.dest(_copyPath) );
+})
+
+/**
+ * [前台sass编译动态监听]
+ * @param  {String} ){                 host [description]
+ * @return {[type]}     [description]
+ */
+gulp.task( 'v3Front', function(){
+    host = "frontend/web";
+    browserSync.init({
+        proxy:'http://www.v3.test',
+        // proxy:'http://192.168.0.175',
+    });
+    gulp.watch( [ host+'/scss/**/*.scss' ], [ 'commonSass'] );       //**表示，所有子级目录
+    gulp.watch("frontend/views/*.php").on('change', reload);
+} );
+```
+
+
 
