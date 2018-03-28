@@ -1,6 +1,6 @@
 # 前端自动化构建
 
-* #### 为什么要使用自动化构建工具
+* ### 为什么要使用自动化构建工具
 
 现在的前端开发已经不再仅仅只是静态网页的开发了，日新月异的前端技术已经让前端代码的逻辑和交互效果越来越复杂，更加的不易于管理，模块化开发和预处理框架把项目分成若干个小模块，增加了最后发布的困难，没有一个统一的标准，让前端的项目结构千奇百怪。前端自动化构建在整个项目开发中越来越重要。
 
@@ -115,7 +115,7 @@ gulp.task( 'v3Front', function(){
 
 ### 自动化构建工具就是用来让我们不再做机械重复的事情，解放我们的双手的。
 
-* #### gulp
+* ### gulp
 
 #### [gulp中文文档：https://www.gulpjs.com.cn/docs/](#gulp中文文档：httpswwwgulpjscomcndocs)
 
@@ -133,15 +133,159 @@ gulp.task( 'v3Front', function(){
 
 1. ##### I/O流程的不同，使用Grunt的I/O过程中会产生一些中间态的临时文件，一些任务生成临时文件，其它任务可能会基于临时文件再做处理并生成最终的构建后文件，而使用Gulp的优势就是利用流的方式进行文件的处理，使用管道（pipe）思想，前一级的输出，直接变成后一级的输入，通过管道将多个任务和操作连接起来，因此只有一次I/O的过程，流程更清晰，更纯粹。Gulp去除了中间文件，只将最后的输出写入磁盘，整个过程因此变得更快
 2. ##### 插件，Gulp的插件更纯粹，单一的功能，并坚持一个插件只做一件事。
-3. #### gulp API
-4. ##### gulp.src\(globs\[, options\]\)，输出符合所提供的匹配模式或者匹配模式的数组的文件。将返回一个文件流，可以被pipe到别的插件中。
-5. ##### gulp.dest\(path\[, options\]\)，能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
-6. ##### gulp.task\(name\[, deps\], fn\)，定义一个gulp task任务。
-7. ##### gulp.watch\(glob\[, opts\], tasks\)，一个 glob 字符串，或者一个包含多个 glob 字符串的数组，用来指定具体监控哪些文件的变动。
+
+* #### gulp使用
+
+1. ##### 前提条件：安装node.js
+2. ##### 安装gulp ； cnpm install --save-dev gulp
+3. ##### 创建gulpfile.js配置文件
+
+##### gulpfile.js:
+
+```js
+var
+    fs = require('fs'),
+    gulp = require('gulp'),
+    uglify = require('gulp-uglify'),
+    sass = require('gulp-sass'),
+    minifycss = require('gulp-clean-css'),
+    cssVer = require('gulp-make-css-url-version'),
+    rename = require('gulp-rename'),
+    autoprefixer = require('gulp-autoprefixer'),
+    csscomb = require('gulp-csscomb'),
+    concat = require('gulp-concat'),
+    browserSync = require('browser-sync').create(),
+    reload = browserSync.reload,
+    babel = require('gulp-babel');
+
+
+var host = "",
+    sassOptions = {},
+    prefixerOptions = {
+        browsers: ['> 5%'],
+        cascade: false
+    };
+
+gulp.task('default', ['v3Front']);
+
+function getMinisPath(path) {
+    return host + path + '/dist/';
+}
+
+/**
+ * [复制js]
+ */
+gulp.task('copyJs', function() {
+    var _dist = getMinisPath('/js');
+
+    deleteFolderRecursive(_dist);
+    return gulp.src(host + '/js/**/{*.min,*-min,*.bundle}.js')
+        .pipe(gulp.dest(_dist));
+})
+
+/**
+ * [复制css]
+ */
+gulp.task('copyCss', function() {
+    var _dist = getMinisPath('/css');
+    deleteFolderRecursive(_dist);
+    return gulp.src(host + '/css/**/{*.min,*-min}.css')
+        .pipe(gulp.dest(_dist));
+})
+
+/**
+ * [压缩js 将es6装换为es5，添加后缀名]
+ */
+gulp.task('uglify', ['copyJs'], function() {
+    var _dist = getMinisPath('/js');
+
+    return gulp.src(host + '/js/**/!(*.min|*-min|*.bundle).js')
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(babel({ presets: ['es2015'] }))
+        .pipe(uglify())
+        .pipe(gulp.dest(_dist));
+});
+
+/**
+ * [压缩css，添加后缀名]
+ */
+gulp.task("minifycss", ['copyCss'], function() {
+    var _dist = getMinisPath('/css');
+    return gulp.src(host + '/css/**/!(*.min|*-min).css')
+        .pipe(autoprefixer(prefixerOptions))
+        .pipe(rename({ suffix: '.min' }))
+        // .pipe(cssVer({useDate: false, assetsDir: host})) //清除css的背景图片的浏览器缓存
+        .pipe(minifycss())
+        .pipe(gulp.dest(_dist));
+});
+
+/**
+ * [前台sass编译]
+ */
+gulp.task('sass', function() {
+    //不能加入return,否则会导致 plumber无效
+    return gulp.src(host + '/scss/*.scss')
+        //.pipe( plumber() )      //添加守护进程，让他不会因为错误而中断
+        .pipe(sass(sassOptions).on('error', sass.logError))
+        .pipe(csscomb()) //属性优先级排序
+        //.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        //.pipe( plumber.stop() )
+        .pipe(gulp.dest(host + '/css'))
+        .pipe(reload({ stream: true }));
+});
+
+/**
+ */
+gulp.task('commonSass', ['sass'], function() {
+    var _copyPath = "common/assets/vendor/css";
+    deleteFile(_copyPath + '/common.css');
+    return gulp.src(host + '/css/common.css')
+        .pipe(gulp.dest(_copyPath));
+})
+/**
+ * [前台js和css压缩打包]
+ */
+gulp.task('v3MinisFront', function() {
+    host = "frontend/web";
+    // gulp.start( ['sass','concat'] );
+    gulp.start(['commonSass', 'minifycss', 'uglify']);
+});
+
+deleteFolderRecursive = function(path) {
+    var files = [];
+    if (fs.existsSync(path)) {
+        files = fs.readdirSync(path);
+        files.forEach(function(file, index) {
+            var curPath = path + "/" + file;
+            if (fs.statSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+};
+
+deleteFile = function(filePath) {
+    fs.exists(filePath, function(exists) {
+        if (exists) {
+            fs.unlink(filePath);
+        }
+    })
+}
+```
+
+* #### gulp API
+
+1. ##### gulp.src\(globs\[, options\]\)，输出符合所提供的匹配模式或者匹配模式的数组的文件。将返回一个文件流，可以被pipe到别的插件中。
+2. ##### gulp.dest\(path\[, options\]\)，能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
+3. ##### gulp.task\(name\[, deps\], fn\)，定义一个gulp task任务。
+4. ##### gulp.watch\(glob\[, opts\], tasks\)，一个 glob 字符串，或者一个包含多个 glob 字符串的数组，用来指定具体监控哪些文件的变动。
 
 ###### 总之：gulp任务就是先找匹配的文件，通过管道流pipe到别的插件里面，处理好之后通过dest将结果写入文件夹，如果中途要执行监听操作，就watch需要监听的task就好，另外，task之间是可以有依赖关系的。
 
-* #### webpack
+* ### webpack
 
 #### webpack中文网 [https://www.webpackjs.com/concepts/](https://www.webpackjs.com/concepts/)
 
@@ -483,6 +627,10 @@ module.exports = {
 
 }
 ```
+
+* ### gulp 和webpack比较
+
+其实两者并没有太多的可比性，因为两个工具的核心点不一样
 
 
 
