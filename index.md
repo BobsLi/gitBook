@@ -119,23 +119,25 @@ gulp.task( 'v3Front', function(){
 
 #### [gulp中文文档：https://www.gulpjs.com.cn/docs/](#gulp中文文档：httpswwwgulpjscomcndocs)
 
-1. #### gulp的特点
-2. 易于使用：采用代码优于配置策略，Gulp让简单的事情继续简单，复杂的任务变得可管理。
+* ##### gulp的特点
 
-3. 高效：通过利用Node.js强大的流，不需要往磁盘写中间文件，可以更快地完成构建。
+1. 易于使用：采用代码优于配置策略，Gulp让简单的事情继续简单，复杂的任务变得可管理。
 
-4. 高质量：Gulp严格的插件指导方针，确保插件简单并且按你期望的方式工作。
+2. 高效：通过利用Node.js强大的流，不需要往磁盘写中间文件，可以更快地完成构建。
 
-5. 易于学习：通过把API降到最少，你能在很短的时间内学会Gulp。构建工作就像你设想的一样：是一系列流管道。
+3. 高质量：Gulp严格的插件指导方针，确保插件简单并且按你期望的方式工作。
 
-6. #### gulp和grunt的区别
-7. ##### I/O流程的不同，使用Grunt的I/O过程中会产生一些中间态的临时文件，一些任务生成临时文件，其它任务可能会基于临时文件再做处理并生成最终的构建后文件，而使用Gulp的优势就是利用流的方式进行文件的处理，使用管道（pipe）思想，前一级的输出，直接变成后一级的输入，通过管道将多个任务和操作连接起来，因此只有一次I/O的过程，流程更清晰，更纯粹。Gulp去除了中间文件，只将最后的输出写入磁盘，整个过程因此变得更快
-8. ##### 插件，Gulp的插件更纯粹，单一的功能，并坚持一个插件只做一件事。
-9. #### gulp API
-10. ##### gulp.src\(globs\[, options\]\)，输出符合所提供的匹配模式或者匹配模式的数组的文件。将返回一个文件流，可以被pipe到别的插件中。
-11. ##### gulp.dest\(path\[, options\]\)，能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
-12. ##### gulp.task\(name\[, deps\], fn\)，定义一个gulp task任务。
-13. ##### gulp.watch\(glob\[, opts\], tasks\)，一个 glob 字符串，或者一个包含多个 glob 字符串的数组，用来指定具体监控哪些文件的变动。
+4. 易于学习：通过把API降到最少，你能在很短的时间内学会Gulp。构建工作就像你设想的一样：是一系列流管道。
+
+* ##### gulp和grunt的区别
+
+1. ##### I/O流程的不同，使用Grunt的I/O过程中会产生一些中间态的临时文件，一些任务生成临时文件，其它任务可能会基于临时文件再做处理并生成最终的构建后文件，而使用Gulp的优势就是利用流的方式进行文件的处理，使用管道（pipe）思想，前一级的输出，直接变成后一级的输入，通过管道将多个任务和操作连接起来，因此只有一次I/O的过程，流程更清晰，更纯粹。Gulp去除了中间文件，只将最后的输出写入磁盘，整个过程因此变得更快
+2. ##### 插件，Gulp的插件更纯粹，单一的功能，并坚持一个插件只做一件事。
+3. #### gulp API
+4. ##### gulp.src\(globs\[, options\]\)，输出符合所提供的匹配模式或者匹配模式的数组的文件。将返回一个文件流，可以被pipe到别的插件中。
+5. ##### gulp.dest\(path\[, options\]\)，能被 pipe 进来，并且将会写文件。并且重新输出（emits）所有数据，因此你可以将它 pipe 到多个文件夹。如果某文件夹不存在，将会自动创建它。
+6. ##### gulp.task\(name\[, deps\], fn\)，定义一个gulp task任务。
+7. ##### gulp.watch\(glob\[, opts\], tasks\)，一个 glob 字符串，或者一个包含多个 glob 字符串的数组，用来指定具体监控哪些文件的变动。
 
 ###### 总之：gulp任务就是先找匹配的文件，通过管道流pipe到别的插件里面，处理好之后通过dest将结果写入文件夹，如果中途要执行监听操作，就watch需要监听的task就好，另外，task之间是可以有依赖关系的。
 
@@ -145,7 +147,9 @@ gulp.task( 'v3Front', function(){
 
 * ##### **什么是webpack?**
 
-       **本质上，webpack是一个现代 JavaScript 应用程序的静态模块打包器，当 webpack 处理应用程序时，它会递归地构建一个**
+  ```
+   **本质上，webpack是一个现代 JavaScript 应用程序的静态模块打包器，当 webpack 处理应用程序时，它会递归地构建一个**
+  ```
 
 **依赖关系图，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个bundle。**
 
@@ -159,325 +163,326 @@ gulp.task( 'v3Front', function(){
 **Webpack 的核心就是模块化地组织，模块化地依赖，然后模块化地打包。在webpack看来一切都是模块，包括JavaScript代码，以及css、fonts和图片等等，通过合适的loader转换为webpack可以有效处理的模块（webpack自身只能处理javascript）。**
 
 * ##### webpack使用
-
-1. ##### 前提条件：安装node.js的最新版本
-2. ##### 本地安装： cnpm install --save-dev webpack
-3. ##### 创建webpack配置文件 webpack.config.js
+* ##### 前提条件：安装node.js的最新版本
+* ##### 本地安装： cnpm install --save-dev webpack
+* ##### 创建webpack配置文件 webpack.config.js
 
 ##### webpack.config.js:
 
-    const path = require('path');
-    const webpack = require('webpack');
+```js
+const path = require('path');
+const webpack = require('webpack');
 
-    module.exports = {
-            //起点入口
-            entry: "./app/entry", // string | object | array
-            entry: ["./app/entry1", "./app/entry2"],
-            entry: {
-                a: "./app/entry-a",
-                vendor: ['react', 'react-dom']
-            },
-            // 这里应用程序开始执行
-            // webpack 开始打包
+module.exports = {
+        //起点入口
+        entry: "./app/entry", // string | object | array
+        entry: ["./app/entry1", "./app/entry2"],
+        entry: {
+            a: "./app/entry-a",
+            vendor: ['react', 'react-dom']
+        },
+        // 这里应用程序开始执行
+        // webpack 开始打包
 
-            output: {
-                // webpack 如何输出结果的相关选项
+        output: {
+            // webpack 如何输出结果的相关选项
 
-                path: path.resolve(__dirname, "dist"), // string
-                // 所有输出文件的目标路径
-                // 必须是绝对路径（使用 Node.js 的 path 模块）
+            path: path.resolve(__dirname, "dist"), // string
+            // 所有输出文件的目标路径
+            // 必须是绝对路径（使用 Node.js 的 path 模块）
 
-                filename: "bundle.js", // string
-                filename: "[name].js", // 用于多个入口点(entry point)（出口点？）
-                filename: "[chunkhash].js", // 用于长效缓存
-                // 「入口分块(entry chunk)」的文件名模板（出口分块？）
+            filename: "bundle.js", // string
+            filename: "[name].js", // 用于多个入口点(entry point)（出口点？）
+            filename: "[chunkhash].js", // 用于长效缓存
+            // 「入口分块(entry chunk)」的文件名模板（出口分块？）
 
-                publicPath: "/assets/", // string
-                publicPath: "",
-                publicPath: "https://cdn.example.com/",
-                // 输出解析文件的目录，url 相对于 HTML 页面
+            publicPath: "/assets/", // string
+            publicPath: "",
+            publicPath: "https://cdn.example.com/",
+            // 输出解析文件的目录，url 相对于 HTML 页面
 
-                library: "MyLibrary", // string,
-                // 导出库(exported library)的名称
+            library: "MyLibrary", // string,
+            // 导出库(exported library)的名称
 
-                libraryTarget: "umd", // 通用模块定义
-                libraryTarget: "umd2", // 通用模块定义
-                libraryTarget: "commonjs2", // exported with module.exports
-                libraryTarget: "commonjs-module", // 使用 module.exports 导出
-                libraryTarget: "commonjs", // 作为 exports 的属性导出
-                libraryTarget: "amd", // 使用 AMD 定义方法来定义
-                libraryTarget: "this", // 在 this 上设置属性
-                libraryTarget: "var", // 变量定义于根作用域下
-                libraryTarget: "assign", // 盲分配(blind assignment)
-                libraryTarget: "window", // 在 window 对象上设置属性
-                libraryTarget: "global", // property set to global object
-                libraryTarget: "jsonp", // jsonp wrapper
-                // 导出库(exported library)的类型
+            libraryTarget: "umd", // 通用模块定义
+            libraryTarget: "umd2", // 通用模块定义
+            libraryTarget: "commonjs2", // exported with module.exports
+            libraryTarget: "commonjs-module", // 使用 module.exports 导出
+            libraryTarget: "commonjs", // 作为 exports 的属性导出
+            libraryTarget: "amd", // 使用 AMD 定义方法来定义
+            libraryTarget: "this", // 在 this 上设置属性
+            libraryTarget: "var", // 变量定义于根作用域下
+            libraryTarget: "assign", // 盲分配(blind assignment)
+            libraryTarget: "window", // 在 window 对象上设置属性
+            libraryTarget: "global", // property set to global object
+            libraryTarget: "jsonp", // jsonp wrapper
+            // 导出库(exported library)的类型
 
-                /* 高级输出配置（点击显示） */
+            /* 高级输出配置（点击显示） */
 
-                pathinfo: true, // boolean
-                // 在生成代码时，引入相关的模块、导出、请求等有帮助的路径信息。
+            pathinfo: true, // boolean
+            // 在生成代码时，引入相关的模块、导出、请求等有帮助的路径信息。
 
-                chunkFilename: "[id].js",
-                chunkFilename: "[chunkhash].js", // 长效缓存(/guides/caching)
-                // 「附加分块(additional chunk)」的文件名模板
+            chunkFilename: "[id].js",
+            chunkFilename: "[chunkhash].js", // 长效缓存(/guides/caching)
+            // 「附加分块(additional chunk)」的文件名模板
 
-                jsonpFunction: "myWebpackJsonp", // string
-                // 用于加载分块的 JSONP 函数名
+            jsonpFunction: "myWebpackJsonp", // string
+            // 用于加载分块的 JSONP 函数名
 
-                sourceMapFilename: "[file].map", // string
-                sourceMapFilename: "sourcemaps/[file].map", // string
-                // 「source map 位置」的文件名模板
+            sourceMapFilename: "[file].map", // string
+            sourceMapFilename: "sourcemaps/[file].map", // string
+            // 「source map 位置」的文件名模板
 
-                devtoolModuleFilenameTemplate: "webpack:///[resource-path]", // string
-                // 「devtool 中模块」的文件名模板
+            devtoolModuleFilenameTemplate: "webpack:///[resource-path]", // string
+            // 「devtool 中模块」的文件名模板
 
-                devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]", // string
-                // 「devtool 中模块」的文件名模板（用于冲突）
+            devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]", // string
+            // 「devtool 中模块」的文件名模板（用于冲突）
 
-                umdNamedDefine: true, // boolean
-                // 在 UMD 库中使用命名的 AMD 模块
+            umdNamedDefine: true, // boolean
+            // 在 UMD 库中使用命名的 AMD 模块
 
-                crossOriginLoading: "use-credentials", // 枚举
-                crossOriginLoading: "anonymous",
-                crossOriginLoading: false,
-                // 指定运行时如何发出跨域请求问题
+            crossOriginLoading: "use-credentials", // 枚举
+            crossOriginLoading: "anonymous",
+            crossOriginLoading: false,
+            // 指定运行时如何发出跨域请求问题
 
-                /* 专家级输出配置（自行承担风险） */
-            },
+            /* 专家级输出配置（自行承担风险） */
+        },
 
-            module: {
-                // 关于模块配置
+        module: {
+            // 关于模块配置
 
-                rules: [
-                    // 模块规则（配置 loader、解析器等选项）
+            rules: [
+                // 模块规则（配置 loader、解析器等选项）
 
-                    {
-                        test: /\.jsx?$/,
-                        include: [
-                            path.resolve(__dirname, "app")
-                        ],
-                        exclude: [
-                            path.resolve(__dirname, "app/demo-files")
-                        ],
-                        // 这里是匹配条件，每个选项都接收一个正则表达式或字符串
-                        // test 和 include 具有相同的作用，都是必须匹配选项
-                        // exclude 是必不匹配选项（优先于 test 和 include）
-                        // 最佳实践：
-                        // - 只在 test 和 文件名匹配 中使用正则表达式
-                        // - 在 include 和 exclude 中使用绝对路径数组
-                        // - 尽量避免 exclude，更倾向于使用 include
+                {
+                    test: /\.jsx?$/,
+                    include: [
+                        path.resolve(__dirname, "app")
+                    ],
+                    exclude: [
+                        path.resolve(__dirname, "app/demo-files")
+                    ],
+                    // 这里是匹配条件，每个选项都接收一个正则表达式或字符串
+                    // test 和 include 具有相同的作用，都是必须匹配选项
+                    // exclude 是必不匹配选项（优先于 test 和 include）
+                    // 最佳实践：
+                    // - 只在 test 和 文件名匹配 中使用正则表达式
+                    // - 在 include 和 exclude 中使用绝对路径数组
+                    // - 尽量避免 exclude，更倾向于使用 include
 
-                        issuer: { test, include, exclude },
-                        // issuer 条件（导入源）
+                    issuer: { test, include, exclude },
+                    // issuer 条件（导入源）
 
-                        enforce: "pre",
-                        enforce: "post",
-                        // 标识应用这些规则，即使规则覆盖（高级选项）
+                    enforce: "pre",
+                    enforce: "post",
+                    // 标识应用这些规则，即使规则覆盖（高级选项）
 
-                        loader: "babel-loader",
-                        // 应该应用的 loader，它相对上下文解析
-                        // 为了更清晰，`-loader` 后缀在 webpack 2 中不再是可选的
-                        // 查看 webpack 1 升级指南。
+                    loader: "babel-loader",
+                    // 应该应用的 loader，它相对上下文解析
+                    // 为了更清晰，`-loader` 后缀在 webpack 2 中不再是可选的
+                    // 查看 webpack 1 升级指南。
 
-                        options: {
-                            presets: ["es2015", 'react']
+                    options: {
+                        presets: ["es2015", 'react']
+                    },
+                    // loader 的可选项
+                },
+
+                //sass-loader, ->, css-loader, -> ,style-loader
+                {
+                    test: /\.(css|scss)$/,
+                    exclude: /(node_modules)/,
+                    use: [
+                        {
+                            loader: "style-loader"
                         },
-                        // loader 的可选项
-                    },
-
-                    //sass-loader, ->, css-loader, -> ,style-loader
-                    {
-                        test: /\.(css|scss)$/,
-                        exclude: /(node_modules)/,
-                        use: [
-                            {
-                                loader: "style-loader"
-                            },
-                            {
-                                loader: "css-loader",
-                                options: {
-                                    modules: false,
-                                    minimize: true,
-                                }
-                            },
-                            {
-                                loader: "sass-loader",
-                                options: {
-                                    modules: false,
-                                }
-                            },
-                        ],
-                    },
-
-                    {
-                        test: /\.html$/,
-                        test: "\.html$"
-
-                        use: [
-                            // 应用多个 loader 和选项
-                            "htmllint-loader",
-                            {
-                                loader: "html-loader",
-                                options: {
-                                    /* ... */
-                                }
+                        {
+                            loader: "css-loader",
+                            options: {
+                                modules: false,
+                                minimize: true,
                             }
-                        ]
-                    },
-
-                    { oneOf: [ /* rules */ ] },
-                    // 只使用这些嵌套规则之一
-
-                    { rules: [ /* rules */ ] },
-                    // 使用所有这些嵌套规则（合并可用条件）
-
-                    { resource: { and: [ /* 条件 */ ] } },
-                    // 仅当所有条件都匹配时才匹配
-
-                    { resource: { or: [ /* 条件 */ ] } },
-                    { resource: [ /* 条件 */ ] },
-                    // 任意条件匹配时匹配（默认为数组）
-
-                    { resource: { not: /* 条件 */ } }
-                    // 条件不匹配时匹配
-                ],
-
-                /* 高级模块配置（点击展示） */
-            },
-
-            resolve: {
-                // 解析模块请求的选项
-                // （不适用于对 loader 解析）
-
-                modules: [
-                    "node_modules",
-                    path.resolve(__dirname, "app")
-                ],
-                // 用于查找模块的目录
-
-                extensions: [".js", ".json", ".jsx", ".css"],
-                // 使用的扩展名
-
-                alias: {
-                    // 模块别名列表
-
-                    "module": "new-module",
-                    // 起别名："module" -> "new-module" 和 "module/path/file" -> "new-module/path/file"
-
-                    "only-module$": "new-module",
-                    // 起别名 "only-module" -> "new-module"，但不匹配 "only-module/path/file" -> "new-module/path/file"
-
-                    "module": path.resolve(__dirname, "app/third/module.js"),
-                    // 起别名 "module" -> "./app/third/module.js" 和 "module/file" 会导致错误
-                    // 模块别名相对于当前上下文导入
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                modules: false,
+                            }
+                        },
+                    ],
                 },
-                /* 可供选择的别名语法（点击展示） */
 
-                /* 高级解析选项（点击展示） */
-            },
+                {
+                    test: /\.html$/,
+                    test: "\.html$"
 
-            //实时监听代码变化
-            devServer: {
-                proxy: { // proxy URLs to backend development server
-                    '/api': 'http://localhost:3000'
+                    use: [
+                        // 应用多个 loader 和选项
+                        "htmllint-loader",
+                        {
+                            loader: "html-loader",
+                            options: {
+                                /* ... */
+                            }
+                        }
+                    ]
                 },
-                contentBase: path.join(__dirname, 'public'), // boolean | string | array, static file location
-                compress: true, // enable gzip compression
-                historyApiFallback: true, // true for index.html upon 404, object for multiple paths
-                hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
-                https: false, // true for self-signed, object for cert authority
-                noInfo: true, // only errors & warns on hot reload
-                // ...
-            },
 
-            plugins: [
-                new webpack.optimize.CommonsChunkPlugin('vendor', 'react.bundle.js'), //这是第三方库打包生成的文件
-                new webpack.optimize.UglifyJsPlugin(), //压缩js文件
-                // ...
+                { oneOf: [ /* rules */ ] },
+                // 只使用这些嵌套规则之一
+
+                { rules: [ /* rules */ ] },
+                // 使用所有这些嵌套规则（合并可用条件）
+
+                { resource: { and: [ /* 条件 */ ] } },
+                // 仅当所有条件都匹配时才匹配
+
+                { resource: { or: [ /* 条件 */ ] } },
+                { resource: [ /* 条件 */ ] },
+                // 任意条件匹配时匹配（默认为数组）
+
+                { resource: { not: /* 条件 */ } }
+                // 条件不匹配时匹配
             ],
-            // 附加插件列表
 
-            performance: {
-                hints: "warning", // 枚举
-                maxAssetSize: 200000, // 整数类型（以字节为单位）
-                maxEntrypointSize: 400000, // 整数类型（以字节为单位）
-                assetFilter: function(assetFilename) {
-                    // 提供资源文件名的断言函数
-                    return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
-                }
+            /* 高级模块配置（点击展示） */
+        },
+
+        resolve: {
+            // 解析模块请求的选项
+            // （不适用于对 loader 解析）
+
+            modules: [
+                "node_modules",
+                path.resolve(__dirname, "app")
+            ],
+            // 用于查找模块的目录
+
+            extensions: [".js", ".json", ".jsx", ".css"],
+            // 使用的扩展名
+
+            alias: {
+                // 模块别名列表
+
+                "module": "new-module",
+                // 起别名："module" -> "new-module" 和 "module/path/file" -> "new-module/path/file"
+
+                "only-module$": "new-module",
+                // 起别名 "only-module" -> "new-module"，但不匹配 "only-module/path/file" -> "new-module/path/file"
+
+                "module": path.resolve(__dirname, "app/third/module.js"),
+                // 起别名 "module" -> "./app/third/module.js" 和 "module/file" 会导致错误
+                // 模块别名相对于当前上下文导入
             },
+            /* 可供选择的别名语法（点击展示） */
 
-            devtool: "source-map", // enum
-            // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
-            // 牺牲了构建速度的 `source-map' 是最详细的。
-
-            context: __dirname, // string（绝对路径！）
-            // webpack 的主目录
-            // entry 和 module.rules.loader 选项
-            // 相对于此目录解析
-
-            target: "web", // 枚举
-            // 包(bundle)应该运行的环境
-            // 更改 块加载行为(chunk loading behavior) 和 可用模块(available module)
-
-            externals: ["react", /^@angular\//],
-            // 不要遵循/打包这些模块，而是在运行时从环境中请求他们
-
-            stats: "errors-only",
-            // 精确控制要显示的 bundle 信息
-
-            /* 高级配置（点击展示） */
-
-            resolveLoader: { /* 等同于 resolve */ }
-            // 独立解析选项的 loader
-
-            parallelism: 1, // number
-            // 限制并行处理模块的数量
-
-            profile: true, // boolean
-            // 捕获时机信息
-
-            bail: true, //boolean
-            // 在第一个错误出错时抛出，而不是无视错误。
-
-            cache: false, // boolean
-            // 禁用/启用缓存
-
-            watch: true, //boolean
-        // 启用观察
-
-        watchOptions: {
-            aggregateTimeout: 1000, // in ms
-            // 将多个更改聚合到单个重构建(rebuild)
-
-            poll: true,
-            poll: 500, // 间隔单位 ms
-            // 启用轮询观察模式
-            // 必须用在不通知更改的文件系统中
-            // 即 nfs shares（译者注：Network FileSystem，最大的功能就是可以透過網路，讓不同的機器、不同的作業系統、可以彼此分享個別的檔案 ( share file )）
+            /* 高级解析选项（点击展示） */
         },
 
-        node: {
-            // Polyfills and mocks to run Node.js-
-            // environment code in non-Node environments.
-
-            console: false, // boolean | "mock"
-            global: true, // boolean | "mock"
-            process: true, // boolean
-            __filename: "mock", // boolean | "mock"
-            __dirname: "mock", // boolean | "mock"
-            Buffer: true, // boolean | "mock"
-            setImmediate: true // boolean | "mock" | "empty"
+        //实时监听代码变化
+        devServer: {
+            proxy: { // proxy URLs to backend development server
+                '/api': 'http://localhost:3000'
+            },
+            contentBase: path.join(__dirname, 'public'), // boolean | string | array, static file location
+            compress: true, // enable gzip compression
+            historyApiFallback: true, // true for index.html upon 404, object for multiple paths
+            hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
+            https: false, // true for self-signed, object for cert authority
+            noInfo: true, // only errors & warns on hot reload
+            // ...
         },
 
-        recordsPath: path.resolve(__dirname, "build/records.json"),
-        recordsInputPath: path.resolve(__dirname, "build/records.json"),
-        recordsOutputPath: path.resolve(__dirname, "build/records.json"),
-        // TODO
+        plugins: [
+            new webpack.optimize.CommonsChunkPlugin('vendor', 'react.bundle.js'), //这是第三方库打包生成的文件
+            new webpack.optimize.UglifyJsPlugin(), //压缩js文件
+            // ...
+        ],
+        // 附加插件列表
 
-    }
+        performance: {
+            hints: "warning", // 枚举
+            maxAssetSize: 200000, // 整数类型（以字节为单位）
+            maxEntrypointSize: 400000, // 整数类型（以字节为单位）
+            assetFilter: function(assetFilename) {
+                // 提供资源文件名的断言函数
+                return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
+            }
+        },
+
+        devtool: "source-map", // enum
+        // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
+        // 牺牲了构建速度的 `source-map' 是最详细的。
+
+        context: __dirname, // string（绝对路径！）
+        // webpack 的主目录
+        // entry 和 module.rules.loader 选项
+        // 相对于此目录解析
+
+        target: "web", // 枚举
+        // 包(bundle)应该运行的环境
+        // 更改 块加载行为(chunk loading behavior) 和 可用模块(available module)
+
+        externals: ["react", /^@angular\//],
+        // 不要遵循/打包这些模块，而是在运行时从环境中请求他们
+
+        stats: "errors-only",
+        // 精确控制要显示的 bundle 信息
+
+        /* 高级配置（点击展示） */
+
+        resolveLoader: { /* 等同于 resolve */ }
+        // 独立解析选项的 loader
+
+        parallelism: 1, // number
+        // 限制并行处理模块的数量
+
+        profile: true, // boolean
+        // 捕获时机信息
+
+        bail: true, //boolean
+        // 在第一个错误出错时抛出，而不是无视错误。
+
+        cache: false, // boolean
+        // 禁用/启用缓存
+
+        watch: true, //boolean
+    // 启用观察
+
+    watchOptions: {
+        aggregateTimeout: 1000, // in ms
+        // 将多个更改聚合到单个重构建(rebuild)
+
+        poll: true,
+        poll: 500, // 间隔单位 ms
+        // 启用轮询观察模式
+        // 必须用在不通知更改的文件系统中
+        // 即 nfs shares（译者注：Network FileSystem，最大的功能就是可以透過網路，讓不同的機器、不同的作業系統、可以彼此分享個別的檔案 ( share file )）
+    },
+
+    node: {
+        // Polyfills and mocks to run Node.js-
+        // environment code in non-Node environments.
+
+        console: false, // boolean | "mock"
+        global: true, // boolean | "mock"
+        process: true, // boolean
+        __filename: "mock", // boolean | "mock"
+        __dirname: "mock", // boolean | "mock"
+        Buffer: true, // boolean | "mock"
+        setImmediate: true // boolean | "mock" | "empty"
+    },
+
+    recordsPath: path.resolve(__dirname, "build/records.json"),
+    recordsInputPath: path.resolve(__dirname, "build/records.json"),
+    recordsOutputPath: path.resolve(__dirname, "build/records.json"),
+    // TODO
+
+}
+```
 
 
 
