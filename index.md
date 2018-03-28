@@ -147,10 +147,10 @@ gulp.task( 'v3Front', function(){
 
 上图已经表达清楚了：
 
+**本质上，webpack是一个现代 JavaScript 应用程序的静态模块打包器**
+
 1. **需要把各种资源（js/ts/css/html/ejs/img/fonts等等）都看成 module；**
-2.  **module 之间必须是互相依赖的，在 js 里 import 模板、图片、样式文件等等，样式文件通过 url\(\) 和图片字体关联；这种依赖关系必须是 webpack 既定的或者是通过插件可以理解的关系。**
+2. **module 之间必须是互相依赖的，在 js 里 import 模板、图片、样式文件等等，样式文件通过 url\(\) 和图片字体关联；这种依赖关系必须是 webpack 既定的或者是通过插件可以理解的关系。**
 
-**Webpack 的核心就是模块化地组织，模块化地依赖，然后模块化地打包。在webpack看来一切都是模块，包括JavaScript代码，以及css、fonts和图片等等，通过合适的loader转换为webpack可以有效处理的模块（webpack自身只能处理javascript）**
-
-
+**Webpack 的核心就是模块化地组织，模块化地依赖，然后模块化地打包。在webpack看来一切都是模块，包括JavaScript代码，以及css、fonts和图片等等，通过合适的loader转换为webpack可以有效处理的模块（webpack自身只能处理javascript）。**
 
