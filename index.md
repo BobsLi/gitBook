@@ -125,6 +125,7 @@ gulp.task( 'v3Front', function(){
 3. 高效：通过利用Node.js强大的流，不需要往磁盘写中间文件，可以更快地完成构建。
 
 4. 高质量：Gulp严格的插件指导方针，确保插件简单并且按你期望的方式工作。
+
 5. 易于学习：通过把API降到最少，你能在很短的时间内学会Gulp。构建工作就像你设想的一样：是一系列流管道。
 
 6. #### gulp和grunt的区别
@@ -142,9 +143,14 @@ gulp.task( 'v3Front', function(){
 
 #### webpack中文网 [https://www.webpackjs.com/concepts/](https://www.webpackjs.com/concepts/)
 
-* ##### 什么是webpack?
+* ##### **什么是webpack?**![](/assets/webpac23131k.png)
 
-#### ![](/assets/webpack.png)
+上图已经表达清楚了：
+
+1. **需要把各种资源（js/ts/css/html/ejs/img/fonts等等）都看成 module；**
+2.  **module 之间必须是互相依赖的，在 js 里 import 模板、图片、样式文件等等，样式文件通过 url\(\) 和图片字体关联；这种依赖关系必须是 webpack 既定的或者是通过插件可以理解的关系。**
+
+**Webpack 的核心就是模块化地组织，模块化地依赖，然后模块化地打包。在webpack看来一切都是模块，包括JavaScript代码，以及css、fonts和图片等等，通过合适的loader转换为webpack可以有效处理的模块（webpack自身只能处理javascript）**
 
 
 
